@@ -1,7 +1,8 @@
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+
 <script>
     import Post from "./posts/Post.svelte"
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<Post postid="cbba012a-57b7-470a-8887-5dd1dd980c9b"/>
+<Post postid="1d8fd32d-8963-4b41-bf2f-2eca57ce09bf"/>
