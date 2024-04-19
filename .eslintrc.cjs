@@ -42,4 +42,5 @@ module.exports = {
 		// spaces for minor indentation, tabs for major indentation
 		"no-mixed-spaces-and-tabs": "off",
 	},
+	
 };

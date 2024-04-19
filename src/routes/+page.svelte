@@ -4,8 +4,7 @@
 	} from '$app/navigation';
     import { onMount } from 'svelte';
 	
-	let metacontent = ""
-	let isclient = false;
+    let isclient = false;
 
 	onMount(() => {
 		isclient = true;
