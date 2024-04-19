@@ -6,7 +6,7 @@ It's goal is to be 100% inline with RFC-1-Clients.
 
 ## TODO:
 
-- [ ] Init App (SvelteKit)
+- [x] Init App (SvelteKit)
 - [ ] User profiles 
 - [ ] Custom PFPs 
 - [ ] Default PFPs, extra can be added by uploading as a custom PFP.
