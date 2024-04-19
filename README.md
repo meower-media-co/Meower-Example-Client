@@ -19,7 +19,6 @@ It's goal is to be 100% inline with RFC-1-Clients.
 - [ ] ALL settings
 - [ ] Searching 
 - [ ] Blocking/Reporting users
-- [ ] For Moderation, Deleting posts.
 - [ ] Bridge Support
 - [ ] Sending typing indication
 - [ ] Displaying other typing indecators 
