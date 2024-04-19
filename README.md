@@ -22,7 +22,7 @@ It's goal is to be 100% inline with RFC-1-Clients.
 - [ ] For Moderation, Deleting posts.
 - [ ] Bridge Support
 - [ ] Sending typing indication
-- [ ] Displaying other typing indecators 
+- [ ] Displaying other typing indicators 
 - [ ] Markdown 
 - [ ] Image host whitelist (Until we get a image reflector), Can be disabled by the user (With warning before disabling!)
     
