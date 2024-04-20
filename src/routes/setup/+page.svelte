@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
+	import { fade } from "svelte/transition"
 	import * as mjs from "@meower-media/meower"
 	const client = new mjs.Client()
 
@@ -12,18 +13,20 @@
 	onMount(() => {
         isClient = true;
     })
-	console.log(client.user)
+	
 
 	client.onLogin(() => {
 		loginStatus = "Logged in!"
-		console.log(client.user !== null && typeof client.user !== "undefined")
-		console.log("yay logged in wow so cool")
 	})
+	function loginError(e: Error) {
+		loginStatus = e
+		client.off(".error",loginError)
+	}
 
 	async function submit() {
 		loginStatus = "Logging in..."
-		client.login(username,pswd)
-		
+		client.login(username, pswd)
+		client.on(".error", loginError)
 	}
 </script>
 
@@ -36,12 +39,12 @@
 	<div class='login'>
 		<h1>Meower</h1>
 		<form>
-			<input type='text' placeholder='Username' class='login-input text' bind:value={username}>
-			<input type='password' placeholder='Password' class='login-input text' bind:value={pswd}>
+			<input type='text' placeholder='Username' class='login-input text' bind:value={username} transition:fade>
+			<input type='password' placeholder='Password' class='login-input text' bind:value={pswd} transition:fade>
 			<button class='login-input text' on:click={submit}>Log in</button>
 		</form>
 		{#if loginStatus !== null}
-			<p>{loginStatus}</p>
+			<p transition:fade>{loginStatus}</p>
 		{/if}
 		<small>Meower Example client.</small> 
 		
