@@ -1,8 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
 	import { fade } from "svelte/transition"
-	import * as mjs from "@meower-media/meower"
-	const client = new mjs.Client()
+	let client;
 
 	// Upon login set the user and stuff and go to home
     let isClient = false;
@@ -13,21 +12,26 @@
 	onMount(() => {
         isClient = true;
     })
-	
-
-	client.onLogin(() => {
-		loginStatus = "Logged in!"
-	})
-	function loginError(e: Error) {
-		loginStatus = e
-		client.off(".error",loginError)
+	let login = function(a,b) {
+		console.log("this should not run but it still does")
 	}
+	if (isClient) {
+		client = import("../../lib/stores").client;
+		
+		client.onLogin(() => {
+			//loginStatus = "Logged in!"
+		})
+		function loginError(e: Error) {
+			client.off(".error",loginError)
+		}
 
-	async function submit() {
-		loginStatus = "Logging in..."
-		client.login(username, pswd)
-		client.on(".error", loginError)
+		login = async function(username: string,pswd: string) {
+			client.login(username, pswd)
+			client.on(".error", loginError)
+		}
+		login = login
 	}
+		
 </script>
 
 <svelte:head>
@@ -41,7 +45,8 @@
 		<form>
 			<input type='text' placeholder='Username' class='login-input text' bind:value={username} transition:fade>
 			<input type='password' placeholder='Password' class='login-input text' bind:value={pswd} transition:fade>
-			<button class='login-input text' on:click={submit}>Log in</button>
+			<button class='login-input text' on:click={login}>Log in</button> 
+			<!-- on:click={submit} -->
 		</form>
 		{#if loginStatus !== null}
 			<p transition:fade>{loginStatus}</p>
