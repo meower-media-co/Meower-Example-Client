@@ -75,7 +75,7 @@
       background-color: #2a2a2a !important;
       width: fit-content;
       min-width: 47%;
-      max-width: 49%;
+      max-width: 47%;
       height: fit-content;
       padding-bottom: 1%;
       padding-top: 1%;
