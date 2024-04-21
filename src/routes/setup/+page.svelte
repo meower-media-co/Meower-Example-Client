@@ -4,6 +4,7 @@
 	import { fade } from "svelte/transition";
 	import * as mjs from "@meower-media/meower";
 	import type { EventEmitter } from "events";
+	import { goto } from '$app/navigation';
 
 	let client = writable<mjs.Client & EventEmitter>(undefined);
 
@@ -29,6 +30,7 @@
 				loginText = "Logged in!";
 				loginStatus = "ok";
 				$client.off(".error", err);
+				goto("/app");
 			});
 			$client.on(".error", err);
 		})();
@@ -44,9 +46,7 @@
 	<title>Meower - Login</title>
 	<meta name="description" content="A social media platform" />
 </svelte:head>
-<!-- Dont remove it when the lo
-on si sutats ni
-what -->
+
 {#if isClient && loginStatus != "ok"}
 	<div class="login">
 		<h1>Meower</h1>

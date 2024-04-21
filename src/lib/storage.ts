@@ -18,5 +18,3 @@ mjs.onLogin((token) => {
 */
 
 
-
-export const client = writable<mjs.Client>(new mjs.Client())

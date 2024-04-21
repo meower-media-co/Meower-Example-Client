@@ -3,5 +3,5 @@ import * as mjs from '@meower-media/meower';
 import {writable} from "svelte/store";
 import type { EventEmitter } from 'events';
 
-//@ts-expect-error 
+//@ts-ignore-error
 export const client = writable<mjs.Client & EventEmitter>(new mjs.Client())
