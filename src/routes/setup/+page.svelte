@@ -1,61 +1,82 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-	import { fade } from "svelte/transition"
-	let client;
+	import { onMount } from "svelte";
+	import { writable } from "svelte/store";
+	import { fade } from "svelte/transition";
+	import * as mjs from "@meower-media/meower";
+	import type { EventEmitter } from "events";
+
+	let client = writable<mjs.Client & EventEmitter>(undefined);
 
 	// Upon login set the user and stuff and go to home
-    let isClient = false;
-	let username = ""
-	let pswd = ""
-	let loginStatus = null
+	let isClient = false;
+	let username = "";
+	let pswd = "";
+	let loginText: string = "";
+	let loginStatus: string = "";
 
 	onMount(() => {
-        isClient = true;
-    })
-	let login = function(a,b) {
-		console.log("this should not run but it still does")
-	}
-	if (isClient) {
-		client = import("../../lib/stores").client;
-		
-		client.onLogin(() => {
-			//loginStatus = "Logged in!"
-		})
-		function loginError(e: Error) {
-			client.off(".error",loginError)
-		}
+		isClient = true;
 
-		login = async function(username: string,pswd: string) {
-			client.login(username, pswd)
-			client.on(".error", loginError)
-		}
-		login = login
+		(async () => {
+			(await import("../../lib/stores")).client.subscribe((c) => {
+				client.set(c);
+			});
+			const err = (e: Error) => {
+				loginText = e.message;
+				loginStatus = e.message.split("Failed to login: ")[1];
+			};
+			$client.once("login", () => {
+				loginText = "Logged in!";
+				loginStatus = "ok";
+				$client.off(".error", err);
+			});
+			$client.on(".error", err);
+		})();
+	});
+
+	function login() {
+		loginText = "Logging in..";
+		$client.login(username, pswd);
 	}
-		
 </script>
 
 <svelte:head>
 	<title>Meower - Login</title>
 	<meta name="description" content="A social media platform" />
 </svelte:head>
-
-{#if isClient}
-	<div class='login'>
+<!-- Dont remove it when the lo
+on si sutats ni
+what -->
+{#if isClient && loginStatus != "ok"}
+	<div class="login">
 		<h1>Meower</h1>
 		<form>
-			<input type='text' placeholder='Username' class='login-input text' bind:value={username} transition:fade>
-			<input type='password' placeholder='Password' class='login-input text' bind:value={pswd} transition:fade>
-			<button class='login-input text' on:click={login}>Log in</button> 
+			<input
+				type="text"
+				placeholder="Username"
+				class="login-input text"
+				bind:value={username}
+				transition:fade
+			/>
+			<input
+				type="password"
+				placeholder="Password"
+				class="login-input text"
+				bind:value={pswd}
+				transition:fade
+			/>
+			<button class="login-input text" on:click={login}>Log in</button>
 			<!-- on:click={submit} -->
 		</form>
-		{#if loginStatus !== null}
-			<p transition:fade>{loginStatus}</p>
+		{#if loginText !== null}
+			<p transition:fade>{loginText}</p>
 		{/if}
-		<small>Meower Example client.</small> 
-		
+		<small>Meower Example client.</small>
 	</div>
-{:else}
+{:else if !isClient}
 	Loading Page...
+{:else}
+Something goes here maybe?
 {/if}
 
 <style>
@@ -69,6 +90,6 @@
 
 	.login-input {
 		padding: 1em;
-		margin-bottom: .2cm;
+		margin-bottom: 0.2cm;
 	}
 </style>
