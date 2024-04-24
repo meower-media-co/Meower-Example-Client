@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
-	import { fade } from "svelte/transition";
 	import * as mjs from "@meower-media/meower";
 	import type { EventEmitter } from "events";
 	import { goto } from '$app/navigation';
@@ -54,29 +53,22 @@
 			<input
 				type="text"
 				placeholder="Username"
-				class="login-input text"
 				bind:value={username}
-				transition:fade
 			/>
 			<input
 				type="password"
 				placeholder="Password"
-				class="login-input text"
 				bind:value={pswd}
-				transition:fade
 			/>
-			<button class="login-input text" on:click={login}>Log in</button>
-			<!-- on:click={submit} -->
+			<button on:click={login}>Log in</button>
 		</form>
 		{#if loginText !== null}
-			<p transition:fade>{loginText}</p>
+			<p>{loginText}</p>
 		{/if}
 		<small>Meower Example client.</small>
 	</div>
 {:else if !isClient}
 	Loading Page...
-{:else}
-Something goes here maybe?
 {/if}
 
 <style>
@@ -86,10 +78,5 @@ Something goes here maybe?
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 500px;
-	}
-
-	.login-input {
-		padding: 1em;
-		margin-bottom: 0.2cm;
 	}
 </style>

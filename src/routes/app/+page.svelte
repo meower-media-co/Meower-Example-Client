@@ -8,25 +8,20 @@
 
     let posts: PostType[] = []
 
-
     onMount(async () => {
-        if ($client.user === null || typeof $client.user === "undefined") {
+        /*if ($client.user === null || typeof $client.user === "undefined") {
             goto("/setup")
-        }
+        }*/
         let r = await fetch("https://api.meower.org/home?autoget")
-        r = r.json()
-        posts = r.autoget
+        r = (await r.json()).autoget
+
+        posts = r
         $client.onPost((username,content,origin,bridged) => {   
             console.log(username,content,origin,bridged);
-            posts.reverse()
-            posts.push(bridged.raw);
-            posts.reverse()
+            posts.unshift(bridged.raw);
             posts = posts;
         })
     })
-
-
-    
 </script>
 
 
@@ -39,6 +34,9 @@
 	<meta name="description" content="A social media platform" />
 </svelte:head>
 
-{#each posts as post}
-    <Post {post} />
-{/each}
+<div class="home">
+    <input placeholder="hi" />
+    {#each posts as post}
+        <Post {post} />
+    {/each}
+</div>

@@ -100,12 +100,26 @@ body {
     padding: 0;
 }
 
-input, button {
-    background-color: var(--accent-color);
-    color: var(--color);
+button, input {
     border: none;
     border-radius: 5px;
     outline: none;
     font-family: Roboto;
     font-weight: 400;
+	padding: 1em;
+	margin-bottom: 0.2cm;
+}
+
+button {
+    background-color: var(--accent-color);
+    color: var(--color);
+}
+
+input {
+    background-color: var(--color);
+    color: var(--accent-color);
+}
+
+p,h1,h2,h3,h4,h5,small {
+    color: var(--accent-color-white);
 }

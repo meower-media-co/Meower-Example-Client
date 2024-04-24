@@ -7,9 +7,9 @@
   import Meow from "../assets/images/Meow.svg"
   import Reply from "../assets/images/Reply.svg"
   import NotImplemented from "../assets/images/NotImplemented.svg"
-  const actions = [Love, Meow, Reply]
-  const actionTexts = ["Love", "Meow", "Reply"]
+
   console.log("this exists now")
+
   let pfpUrl = "";
   onMount(() => {
       (async () => {
@@ -37,7 +37,6 @@
           */
       })()
   })
-  
 </script>
 
 
@@ -46,70 +45,71 @@
       <img src={pfpUrl} alt={`${post.u}'s profile picture"`} class="pfp">
       <h2 class="name">{post.u}</h2>
   </div>
+
   <p class="content">{post.p}</p>
-  <p class="time">{post.t.e}</p>
+  <!--<p class="time">{post.t.e}</p>-->
   
   <div class="buttons">
-      {#each actions as icon, i}
-          <button class={actionTexts[i]}>
-              <img src={icon} alt={actionTexts[i]}>
-          </button>
-          <style>
-              button {
-                  width: fit-content;
-                  height: fit-content;
-                  color: rgba(0,0,0 / 0) !important;
-              }
-              img {
-                width: 25.75px;
-                height: 25.75px;
-              }
-          </style>
-      {/each}
+        <button>
+            <img src={Love} alt="Love">
+        </button>
+        <button>
+            <img src={Meow} alt="Meow">
+        </button>
+        <button>
+            <img src={Reply} alt="Reply">
+        </button>
   </div>
   <!--wip-->
 </div>
 
 <style>
-  div {
-      background-color: #2a2a2a !important;
-      width: fit-content;
-      min-width: 47%;
-      max-width: 47%;
-      height: fit-content;
-      padding-bottom: 1%;
-      padding-top: 1%;
-      text-align: left;
-      border-radius: 1rem;
-      margin-top: 25px;
-  }
-  .name {
-      font-size: 35px;
-      position: relative;
-      left: 15px;
+    #post {
+        background-color: #2a2a2a !important;
+        width: 100%;
+        padding: 1em;
+        text-align: left;
+        border-radius: 1rem;
+        margin-top: 25px;
+    }
+    .name {
+        font-size: 35px;
+        position: relative;
+        left: 15px;
 
-  }
-  .pfp {
-      width:65px;
-      height: 65px;
-  }
-  .top {
-      width: fit-content;
-      position: relative;
-      left: 2%;
-      display: flex;
-  }
-  .content {
-      max-width: 94%;
-      overflow-wrap: break-all;
-      word-break: break-all;
-      font-size: 26px;
-      position: relative;
-      left: 15px
-  }
-  .buttons {
-      position: relative;
-      left: 5px;
-      justify-content: 15px;
-  }
+    }
+    .pfp {
+        width:65px;
+        height: 65px;
+    }
+    .top {
+        width: fit-content;
+        position: relative;
+        left: 2%;
+        display: flex;
+    }
+    .content {
+        max-width: 94%;
+        overflow-wrap: break-all;
+        word-break: break-all;
+        font-size: 26px;
+        position: relative;
+        left: 15px
+    }
+
+    .buttons {
+        position: relative;
+        left: 5px;
+        justify-content: 15px;
+        background-color: none;
+    }
+
+    .buttons > button {
+        background: none;
+    }
+
+    .buttons > button > img {
+        width: 2em;
+        height: 2em;
+    }
 </style>

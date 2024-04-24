@@ -10,9 +10,10 @@
 
 <style>
 	.app {
-		--background-color: #1a1b1e;
-		--color: #f5f8fb;
-		--accent-color: #3a3d43;
+		--background-color: #101010;
+		--color: #201900;
+		--accent-color-white: #ffffff;
+		--accent-color: #F9A535;
     	--hov-accent-color: #323439;
     	--hov-color: #4a4d56;
 
@@ -21,5 +22,12 @@
 
 		height: 100vh;
 		width: 100vw;
+	}
+
+	main {
+		position: relative;
+		transform: translate(-50%,0);
+		width: 50%;
+		left: 50%;
 	}
 </style>
