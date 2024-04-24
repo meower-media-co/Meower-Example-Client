@@ -8,10 +8,14 @@
 
     let posts: PostType[] = []
 
-    onMount(() => {
+
+    onMount(async () => {
         if ($client.user === null || typeof $client.user === "undefined") {
             goto("/setup")
         }
+        let r = await fetch("https://api.meower.org/home?autoget")
+        r = r.json()
+        posts = r.autoget
         $client.onPost((username,content,origin,bridged) => {   
             console.log(username,content,origin,bridged);
             posts.reverse()
