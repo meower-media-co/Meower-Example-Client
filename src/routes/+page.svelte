@@ -10,7 +10,6 @@
 		isclient = true;
         goto("/setup")
 	})
-
 </script>
 
 <svelte:head>

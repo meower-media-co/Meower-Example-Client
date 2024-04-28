@@ -1,29 +1,48 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-	import * as mjs from "@meower-media/meower"
-	const client = new mjs.Client()
+	import { onMount } from "svelte";
+	import { writable } from "svelte/store";
+	import * as mjs from "@meower-media/meower";
+	import type { EventEmitter } from "events";
+	import { goto } from '$app/navigation';
+
+	let client = writable<mjs.Client & EventEmitter>(undefined);
 
 	// Upon login set the user and stuff and go to home
-    let isClient = false;
-	let username = ""
-	let pswd = ""
-	let loginStatus = null
+	let isClient = false;
+	let username = "";
+	let pswd = "";
+	let loginText: string = "";
+	let loginStatus: string = "";
 
 	onMount(() => {
-        isClient = true;
-    })
-	console.log(client.user)
+		isClient = true;
 
-	client.onLogin(() => {
-		loginStatus = "Logged in!"
-		console.log(client.user !== null && typeof client.user !== "undefined")
-		console.log("yay logged in wow so cool")
-	})
+		(async () => {
+			(await import("../../lib/stores")).client.subscribe((c) => {
+				client.set(c);
+			});
+			const err = (e: Error) => {
+				loginText = e.message;
+				loginStatus = e.message.split("Failed to login: ")[1];
+			};
+			$client.once("login", () => {
+				loginText = "Logged in!";
+				loginStatus = "ok";
+				$client.off(".error", err);
+				goto("/app");
+			});
+			$client.on(".error", err);
+		})();
+	});
 
-	async function submit() {
-		loginStatus = "Logging in..."
-		client.login(username,pswd)
-		
+	function login() {
+		loginText = "Logging in..";
+		$client.login(username, pswd);
+	}
+
+	function skip() {
+		loginText = "Continuing without logging in..."
+		goto("/app")
 	}
 </script>
 
@@ -32,21 +51,38 @@
 	<meta name="description" content="A social media platform" />
 </svelte:head>
 
-{#if isClient}
-	<div class='login'>
+{#if isClient && loginStatus != "ok"}
+	<div class="login">
 		<h1>Meower</h1>
 		<form>
-			<input type='text' placeholder='Username' class='login-input text' bind:value={username}>
-			<input type='password' placeholder='Password' class='login-input text' bind:value={pswd}>
-			<button class='login-input text' on:click={submit}>Log in</button>
+			<input
+				type="text"
+				placeholder="Username"
+				bind:value={username}
+				class="textinput"
+			/>
+			<input
+				type="password"
+				placeholder="Password"
+				bind:value={pswd}
+				class="textinput"
+			/>
+			<button on:click={login}>Log in</button>
 		</form>
-		{#if loginStatus !== null}
-			<p>{loginStatus}</p>
+
+		<button
+			on:click={skip}
+			class="skip"
+		>
+			Skip
+		</button>
+
+		{#if loginText !== null}
+			<p>{loginText}</p>
 		{/if}
-		<small>Meower Example client.</small> 
-		
+		<small>Meower Example client.</small>
 	</div>
-{:else}
+{:else if !isClient}
 	Loading Page...
 {/if}
 
@@ -58,9 +94,9 @@
 		margin-right: auto;
 		max-width: 500px;
 	}
-
-	.login-input {
-		padding: 1em;
-		margin-bottom: .2cm;
+	.skip {
+		width: 12.75%;
+		margin-left: auto;
+		margin-right: 12%;
 	}
 </style>
