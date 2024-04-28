@@ -10,13 +10,13 @@
 
     onMount(async () => {
         /*if ($client.user === null || typeof $client.user === "undefined") {
-            goto("/setup")
+            
         }*/
         let r = await fetch("https://api.meower.org/home?autoget")
         r = (await r.json()).autoget
 
         posts = r
-        $client.onPost((username,content,origin,bridged) => {   
+        $client.onPost((username,content,origin,bridged) => {
             console.log(username,content,origin,bridged);
             posts.unshift(bridged.raw);
             posts = posts;
@@ -36,7 +36,7 @@
 
 <div class="home">
     <input placeholder="hi" />
-    {#each posts as post}
+    {#each posts as post (post._id)}
         <Post {post} />
     {/each}
 </div>

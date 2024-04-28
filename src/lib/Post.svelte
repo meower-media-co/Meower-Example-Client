@@ -8,14 +8,14 @@
   import Reply from "../assets/images/Reply.svg"
   import NotImplemented from "../assets/images/NotImplemented.svg"
 
-  console.log("this exists now")
-
-  let pfpUrl = "";
+  let pfpUrl = NotImplemented;
   onMount(() => {
       (async () => {
-          const resp = await $client.api.users.get(post.u);
-          //pfpUrl = resp.body.avatar == "" ? "https://assets.meower.org/PFP/" + resp.body.pfp_data + ".svg": "https://uploads.meower.org/icons/" + resp.body.avatar
-          pfpUrl =  "https://uploads.meower.org/icons/" + resp.body.avatar
+        const resp = await $client.api.users.get(post.u);
+        //pfpUrl = resp.body.avatar == "" ? "https://assets.meower.org/PFP/" + resp.body.pfp_data + ".svg": "https://uploads.meower.org/icons/" + resp.body.avatar
+        pfpUrl =  "https://uploads.meower.org/icons/" + resp.body.avatar
+          
+          
           /*
             {
                 "_id": "insanetaco2000",
@@ -49,7 +49,7 @@
   <p class="content">{post.p}</p>
   <!--<p class="time">{post.t.e}</p>-->
   
-  <div class="buttons">
+  <!-- <div class="buttons">
         <button>
             <img src={Love} alt="Love">
         </button>
@@ -59,7 +59,7 @@
         <button>
             <img src={Reply} alt="Reply">
         </button>
-  </div>
+  </div> -->
   <!--wip-->
 </div>
 
@@ -97,7 +97,7 @@
         left: 15px
     }
 
-    .buttons {
+    /* .buttons {
         position: relative;
         left: 5px;
         justify-content: 15px;
@@ -111,5 +111,5 @@
     .buttons > button > img {
         width: 2em;
         height: 2em;
-    }
+    } */
 </style>

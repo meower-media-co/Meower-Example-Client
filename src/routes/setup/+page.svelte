@@ -39,6 +39,11 @@
 		loginText = "Logging in..";
 		$client.login(username, pswd);
 	}
+
+	function skip() {
+		loginText = "Continuing without logging in..."
+		goto("/app")
+	}
 </script>
 
 <svelte:head>
@@ -54,14 +59,24 @@
 				type="text"
 				placeholder="Username"
 				bind:value={username}
+				class="textinput"
 			/>
 			<input
 				type="password"
 				placeholder="Password"
 				bind:value={pswd}
+				class="textinput"
 			/>
 			<button on:click={login}>Log in</button>
 		</form>
+
+		<button
+			on:click={skip}
+			class="skip"
+		>
+			Skip
+		</button>
+
 		{#if loginText !== null}
 			<p>{loginText}</p>
 		{/if}
@@ -78,5 +93,10 @@
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 500px;
+	}
+	.skip {
+		width: 12.75%;
+		margin-left: auto;
+		margin-right: 12%;
 	}
 </style>
