@@ -95,8 +95,7 @@
 		max-width: 500px;
 	}
 	.skip {
-		width: 12.75%;
-		margin-left: auto;
-		margin-right: 12%;
+		width: 62px;
+		margin-top: 15px;
 	}
 </style>

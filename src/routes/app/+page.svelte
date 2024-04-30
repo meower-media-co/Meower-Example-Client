@@ -5,13 +5,16 @@
     import Post from "$lib/Post.svelte" ;
     import { onMount } from "svelte";
     import { goto } from '$app/navigation'; 
+    import LoginAlert from '$lib/LoginAlert.svelte';
+    import MessageInput from '$lib/MessageInput.svelte';
 
     let posts: PostType[] = []
-
+    let loggedin = false
     onMount(async () => {
-        /*if ($client.user === null || typeof $client.user === "undefined") {
-            
-        }*/
+        loggedin = !($client.user === null || typeof $client.user === "undefined")
+        if (loggedin) {
+            console.log($client.user)
+        }
         let r = await fetch("https://api.meower.org/home?autoget")
         r = (await r.json()).autoget
 
@@ -35,7 +38,12 @@
 </svelte:head>
 
 <div class="home">
-    <input placeholder="hi" />
+    {#if !loggedin}
+        <MessageInput loggedin={loggedin}/>
+        <LoginAlert />
+    {/if}
+
+
     {#each posts as post (post._id)}
         <Post {post} />
     {/each}

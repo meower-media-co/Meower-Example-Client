@@ -66,7 +66,7 @@
 <style>
     #post {
         background-color: #2a2a2a !important;
-        width: 100%;
+        width: 750px;
         padding: 1em;
         text-align: left;
         border-radius: 1rem;

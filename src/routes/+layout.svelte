@@ -11,16 +11,19 @@
 <style>
 	.app {
 		--background-color: #101010;
+		--background-sidebar: #201900;
 		--color: #201900;
 		--accent-color-white: #ffffff;
 		--accent-color: #F9A535;
     	--hov-accent-color: #323439;
     	--hov-color: #4a4d56;
+		
 
 		background-color: var(--background-color);
     	color: var(--color);
 
-		height: 100vh;
+		height: fit-content;
+		min-height: 100vh;
 		width: 100vw;
 	}
 
