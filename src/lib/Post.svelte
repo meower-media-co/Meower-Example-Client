@@ -12,8 +12,8 @@
   onMount(() => {
       (async () => {
         const resp = await $client.api.users.get(post.u);
-        //pfpUrl = resp.body.avatar == "" ? "https://assets.meower.org/PFP/" + resp.body.pfp_data + ".svg": "https://uploads.meower.org/icons/" + resp.body.avatar
-        pfpUrl =  "https://uploads.meower.org/icons/" + resp.body.avatar
+        pfpUrl = resp.body.avatar == "" ? `https://github.com/3r1s-s/meo/raw/main/images/avatars-webp/icon_${resp.body.pfp_data}.webp`: "https://uploads.meower.org/icons/" + resp.body.avatar
+        //pfpUrl =  "https://uploads.meower.org/icons/" + resp.body.avatar
           
           
           /*
@@ -81,6 +81,8 @@
     .pfp {
         width:65px;
         height: 65px;
+        border-radius: 8px;
+        box-shadow: 0px 5px 2px 1px var(--hov-accent-color);
     }
     .top {
         width: fit-content;
