@@ -2,7 +2,7 @@
     import {client} from "$lib/stores";
 
 
-    export const loggedin = false;
+    export let loggedin;
 </script>
 
 <!--should this be a textarea?-->

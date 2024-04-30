@@ -26,5 +26,5 @@
 	"dependencies": {
 		"@meower-media/meower": "^2.0.0-alpha11",
 		"@sveltejs/adapter-node": "^5.0.1"
-	} 
+	}
 }

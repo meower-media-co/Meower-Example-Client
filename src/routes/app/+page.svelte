@@ -38,8 +38,8 @@
 </svelte:head>
 
 <div class="home">
+    <MessageInput loggedin={loggedin}/>
     {#if !loggedin}
-        <MessageInput loggedin={loggedin}/>
         <LoginAlert />
     {/if}
 
