@@ -2,11 +2,12 @@
     import NotImplemented from '../../assets/images/NotImplemented.svg';
     import {client} from "$lib/stores";
     import type { Post as PostType } from "@meower-media/meower/dist/api/posts";
-    import Post from "$lib/Post.svelte" ;
     import { onMount } from "svelte";
     import { goto } from '$app/navigation'; 
+    import Post from "$lib/Post.svelte" ;
     import LoginAlert from '$lib/LoginAlert.svelte';
     import MessageInput from '$lib/MessageInput.svelte';
+    import Topbar from '$lib/Topbar.svelte';
 
     let posts: PostType[] = []
     let loggedin = false
@@ -38,6 +39,7 @@
 </svelte:head>
 
 <div class="home">
+    <!-- <Topbar /> -->
     <MessageInput loggedin={loggedin}/>
     {#if !loggedin}
         <LoginAlert />

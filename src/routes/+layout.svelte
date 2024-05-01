@@ -1,9 +1,11 @@
 <script lang="ts">
 	import './styles.css';
+	import Topbar from '$lib/Topbar.svelte';
 </script>
 
 <div class="app">
 	<main>
+		<Topbar/>
 		<slot />
 	</main>
 </div>

@@ -1,6 +1,6 @@
 <script>
     import {client} from "$lib/stores";
-
+    import Send from "../assets/images/Send.svg"
 
     export let loggedin;
 </script>
@@ -12,7 +12,9 @@
     {:else}
         <input placeholder="You need to login to send messages." disabled/>
     {/if}
-    <button class="send">idk</button>
+    <button class="send">
+        <img src={Send} alt="Send">
+    </button>
 </div>
 <style>
     .message {
