@@ -1,32 +1,57 @@
 name: ESLint
 
 on:
-  push:
-    branches: ["main" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "develop" ]
-  schedule:
-    - cron: '43 10 * * 2'
+    push:
+        branches: ["main"]
+    pull_request:
+        # The branches below must be a subset of the branches above
+        branches: ["develop"]
+    schedule:
+        - cron: "43 10 * * 2"
 
 jobs:
-  eslint:
-    name: Run eslint scanning
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    Lint:
+        name: Lint
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            security-events: write
+            actions: read
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  path: main
+            - name: Get MeowerJs version
+              run: |
+                cd main
+                echo "::set-output name=version::.mjs_version)"
 
-      - name: Install ESLint
-        run: |
-          npm install --group=dev
-          npm install eslint@8.10.0
+            - name: Checkout mjs repo
+              uses: actions/checkout@v4
 
-      - name: Run ESLint
-        run: npx eslint .
-          --config .eslintrc.cjs
-        continue-on-error: false
+              with:
+                  repository: meower-media-co/Meower.js
+                  ref: ${{ steps.read_version.outputs.version }}
+                  
+                  path: Meower.js
+            - name: Install pnpm
+              run: |
+                  
+                  npm install pnpm -g
+            - name: Build and Install Meower.js
+              run: | 
+                  cd main
+                  bash scripts/installMeowerJs.sh
+
+            - name: Install ESLint
+              run: |
+                  cd main
+                  npm install --group=dev
+
+            - name: Run ESLint
+              run: |
+                cd main
+                npx eslint . \
+                  --config .eslintrc.cjs
+              continue-on-error: false

@@ -1,15 +1,13 @@
 <script lang="ts">
-	import {
-		goto
-	} from '$app/navigation';
-    import { onMount } from 'svelte';
-	
-    let isclient = false;
+	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
+
+	let isclient = false;
 
 	onMount(() => {
 		isclient = true;
-        goto("/setup")
-	})
+		goto("/setup");
+	});
 </script>
 
 <svelte:head>

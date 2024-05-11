@@ -3,7 +3,7 @@
 	import { writable } from "svelte/store";
 	import type * as mjs from "@meower-media/meower";
 	import type { EventEmitter } from "events";
-	import { goto } from '$app/navigation';
+	import { goto } from "$app/navigation";
 
 	let client = writable<mjs.Client & EventEmitter>(undefined);
 
@@ -18,7 +18,7 @@
 		isClient = true;
 
 		(async () => {
-			(await import("../../lib/stores")).client.subscribe((c) => {
+			(await import("../../lib/stores")).client.subscribe(c => {
 				client.set(c);
 			});
 			const err = (e: Error) => {
@@ -31,7 +31,7 @@
 				$client.off(".error", err);
 				goto("/app");
 			};
-			$client.on("login", login)
+			$client.on("login", login);
 			$client.on(".error", err);
 		})();
 	});
@@ -42,8 +42,8 @@
 	}
 
 	function skip() {
-		loginText = "Continuing without logging in..."
-		$client.login("", "")
+		loginText = "Continuing without logging in...";
+		$client.login("", "");
 	}
 </script>
 
@@ -71,12 +71,7 @@
 			<button on:click={login}>Log in</button>
 		</form>
 
-		<button
-			on:click={skip}
-			class="skip"
-		>
-			Skip
-		</button>
+		<button on:click={skip} class="skip"> Skip </button>
 
 		{#if loginText !== null}
 			<p>{loginText}</p>
@@ -100,7 +95,8 @@
 		margin-top: 15px;
 	}
 
-	button, input {
+	button,
+	input {
 		border: none;
 		border-radius: 5px;
 		outline: none;
@@ -108,10 +104,9 @@
 		font-weight: 600;
 		padding: 1em;
 	}
-	
+
 	button {
 		background-color: var(--accent-color);
 		color: var(--color);
 	}
-	
 </style>

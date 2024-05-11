@@ -1,32 +1,28 @@
 <script lang="ts">
-	import './styles.css';
-	import Topbar from '$lib/Topbar.svelte';
+	import "./styles.css";
+	import Topbar from "$lib/Topbar.svelte";
 </script>
 
 <div class="app">
 	<main>
-		<Topbar/>
+		<Topbar />
 		<slot />
 	</main>
 </div>
 
 <style>
 	.app {
-
-
-    	color: var(--color);
+		color: var(--color);
 
 		height: fit-content;
 	}
 
 	main {
-		
 		position: relative;
-
 	}
 	@media (min-width: 1025px) {
 		main {
-			transform: translate(-50%,0);
+			transform: translate(-50%, 0);
 			width: 50%;
 			left: 50%;
 		}

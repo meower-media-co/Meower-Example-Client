@@ -3,7 +3,11 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: ["eslint:recommended", "plugin:svelte/recommended"],
+	extends: [
+		"eslint:recommended",
+		"plugin:svelte/recommended",
+		"plugin:@typescript-eslint/recommended",
+	],
 	overrides: [
 		{
 			env: {
@@ -17,6 +21,18 @@ module.exports = {
 		{
 			files: ["*.svelte"],
 			parser: "svelte-eslint-parser",
+			parserOptions: {
+				parser: {
+					// Specify a parser for each lang.
+					ts: "@typescript-eslint/parser",
+					js: "espree",
+					typescript: "@typescript-eslint/parser",
+				},
+			},
+		},
+		{
+			files: ["*.ts"],
+			parser: "@typescript-eslint/parser",
 		},
 	],
 	parserOptions: {
@@ -29,7 +45,8 @@ module.exports = {
 		"no-constant-condition": "off",
 		// regex stuff i dont understand, and catches <a />
 		"no-useless-escape": "off",
-		"no-unused-vars": [
+		"no-unused-vars": "off",
+		"@typescript-eslint/no-unused-vars": [
 			"error",
 			{
 				argsIgnorePattern: "^_",
@@ -39,8 +56,12 @@ module.exports = {
 		],
 		// empty catch blocks are fine
 		"no-empty": "off",
+
 		// spaces for minor indentation, tabs for major indentation
 		"no-mixed-spaces-and-tabs": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/ban-types": 1,
+		"@typescript-eslint/ban-ts-comment": "off",
 	},
-	
+	ignorePatterns: ["dist/", "node_modules/", ".husky/", "scripts/*"],
 };

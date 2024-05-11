@@ -30,6 +30,8 @@ rm -rf meower-media-meower-*.tgz
 
 cd ../Meower.js
 
+pnpm install
+
 pnpm pack
 
 cp meower-media-meower-*.tgz $example
