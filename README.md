@@ -19,7 +19,7 @@ It's goal is to be 100% inline with RFC-1-Clients.
 - [ ] ALL settings
 - [ ] Searching 
 - [ ] Blocking/Reporting users
-- [ ] Bridge Support
+- [x] Bridge Support
 - [ ] Sending typing indication
 - [ ] Displaying other typing indecators 
 - [ ] Markdown 
@@ -52,4 +52,4 @@ It's goal is to be 100% inline with RFC-1-Clients.
 
 ## Library
 
-This client will use Meower.js exclusively for connecting to meower, no external fetches
+This client will use Meower.js exclusively for connecting to meower, no bypassing private vars.

@@ -12,27 +12,23 @@
 
 <style>
 	.app {
-		--background-color: #101010;
-		--background-sidebar: #201900;
-		--color: #201900;
-		--accent-color-white: #ffffff;
-		--accent-color: #F9A535;
-    	--hov-accent-color: #323439;
-    	--hov-color: #4a4d56;
-		
 
-		background-color: var(--background-color);
+
     	color: var(--color);
 
 		height: fit-content;
-		min-height: 100vh;
-		width: 100vw;
 	}
 
 	main {
+		
 		position: relative;
-		transform: translate(-50%,0);
-		width: 50%;
-		left: 50%;
+
+	}
+	@media (min-width: 1025px) {
+		main {
+			transform: translate(-50%,0);
+			width: 50%;
+			left: 50%;
+		}
 	}
 </style>

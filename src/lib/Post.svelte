@@ -1,73 +1,43 @@
 <script lang="ts"> 
-  import type { Post } from "@meower-media/meower/dist/api/posts";
-  export let post: Post;
+  import type { Post } from "@meower-media/meower/dist/typeWrappers";
+  import parseMarkdown from "./parseMarkdown";
   import { onMount } from "svelte";
-  import { client } from "$lib/stores"; // $lib/client
-  import Love from "../assets/images/Love.svg"
-  import Meow from "../assets/images/Meow.svg"
-  import Reply from "../assets/images/Reply.svg"
-  import NotImplemented from "../assets/images/NotImplemented.svg"
+  type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
-  let pfpUrl = NotImplemented;
+  export let post: Post;
+  let data: string | UnwrapPromise<ReturnType<typeof parseMarkdown>> = post.content;
+
   onMount(() => {
-      (async () => {
-        const resp = await $client.api.users.get(post.u);
-        pfpUrl = resp.body.avatar == "" ? `https://github.com/3r1s-s/meo/raw/main/images/avatars-webp/icon_${resp.body.pfp_data}.webp`: "https://uploads.meower.org/icons/" + resp.body.avatar
-        //pfpUrl =  "https://uploads.meower.org/icons/" + resp.body.avatar
-          
-          
-          /*
-            {
-                "_id": "insanetaco2000",
-                "avatar": "6jeyd6kRjfI5bZYt7kSOpXSm",
-                "avatar_color": "000000",
-                "banned": false,
-                "created": 1680731761,
-                "error": false,
-                "experiments": 0,
-                "flags": 0,
-                "last_seen": 1713721625,
-                "lower_username": "insanetaco2000",
-                "lvl": 0,
-                "permissions": 8190,
-                "pfp_data": 101,
-                "quote": "Sometimes your potatos explode ¯\\_(ツ)_/¯",
-                "uuid": "e03f6f29-ec59-491c-9c40-febfbb498c92"
-            }
-          */
-      })()
-  })
+    (async () => {
+      data = await parseMarkdown(post.content);
+    })();
+
+  });
+
+  console.log(post)
 </script>
 
 
-<div id="post">
+<div class="post">
   <div class="top">
-      <img src={pfpUrl} alt={`${post.u}'s profile picture"`} class="pfp">
-      <h2 class="name">{post.u}</h2>
+      <img src={post.user.avatar_url} alt={`${post.user.name}'s profile picture"`} class="pfp">
+      <h2 class="name">{post.user.name}</h2>
   </div>
-
-  <p class="content">{post.p}</p>
-  <!--<p class="time">{post.t.e}</p>-->
-  
-  <!-- <div class="buttons">
-        <button>
-            <img src={Love} alt="Love">
-        </button>
-        <button>
-            <img src={Meow} alt="Meow">
-        </button>
-        <button>
-            <img src={Reply} alt="Reply">
-        </button>
-  </div> -->
-  <!--wip-->
+    <div class="content"> 
+        {#if typeof data === "string"}
+            {data}
+        {:else}
+            {@html data.html}
+        {/if}
+    </div>
 </div>
 
 <style>
-    #post {
+    .post {
         background-color: #2a2a2a !important;
-        width: 750px;
-        padding: 1em;
+ 
+        width: 82%;
+        padding: .5em;
         text-align: left;
         border-radius: 1rem;
         margin-top: 25px;
@@ -76,10 +46,11 @@
         font-size: 35px;
         position: relative;
         left: 15px;
+        bottom: 30px;
 
     }
     .pfp {
-        width:65px;
+        width:  65px;
         height: 65px;
         border-radius: 8px;
         box-shadow: 0px 5px 2px 1px var(--hov-accent-color);
@@ -89,14 +60,17 @@
         position: relative;
         left: 2%;
         display: flex;
+        margin-bottom: 0px;
     }
-    .content {
-        max-width: 94%;
+    :global(.content) {
+        display: block;
+        
+        max-width: 100%;
         overflow-wrap: break-all;
-        word-break: break-all;
+        word-break: break-word;
         font-size: 26px;
         position: relative;
-        left: 15px
+        margin-top: 0px;
     }
 
     /* .buttons {
@@ -114,4 +88,36 @@
         width: 2em;
         height: 2em;
     } */
+
+    @media (max-width: 600px) {
+        .post {
+            position: relative;
+            padding: 0px;
+            width: 95%;
+            align-self: center;
+            left: 2%;
+        }
+
+        .content {
+            margin: 5px;
+            margin-top: 0px;
+        }
+    }
+
+    :global(.content * code) {
+        display: inline-block;
+        max-width: 100% !important;
+        overflow: scroll;
+        padding: 5px;
+    }
+
+    :global(.emoji) {
+        height: 1em;
+        width: 1em;
+        vertical-align: -0.1em;
+    }
+
+    :global(.content a) {
+        color: var(--link-accent-color)
+    }
 </style>

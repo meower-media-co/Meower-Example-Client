@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
-	import * as mjs from "@meower-media/meower";
+	import type * as mjs from "@meower-media/meower";
 	import type { EventEmitter } from "events";
 	import { goto } from '$app/navigation';
 
@@ -25,12 +25,13 @@
 				loginText = e.message;
 				loginStatus = e.message.split("Failed to login: ")[1];
 			};
-			$client.once("login", () => {
+			const login = () => {
 				loginText = "Logged in!";
 				loginStatus = "ok";
 				$client.off(".error", err);
 				goto("/app");
-			});
+			};
+			$client.on("login", login)
 			$client.on(".error", err);
 		})();
 	});
@@ -42,7 +43,7 @@
 
 	function skip() {
 		loginText = "Continuing without logging in..."
-		goto("/app")
+		$client.login("", "")
 	}
 </script>
 
@@ -98,4 +99,19 @@
 		width: 62px;
 		margin-top: 15px;
 	}
+
+	button, input {
+		border: none;
+		border-radius: 5px;
+		outline: none;
+		font-family: Roboto;
+		font-weight: 600;
+		padding: 1em;
+	}
+	
+	button {
+		background-color: var(--accent-color);
+		color: var(--color);
+	}
+	
 </style>

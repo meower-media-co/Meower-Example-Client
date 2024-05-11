@@ -10,12 +10,14 @@
 </aside>
 
 <style>
+    
     aside {
         float: right;
         color: var(--accent-color-white);
         text-align: center;
-        position: relative;
-        left: 300px;
+        position: absolute;
+        width: 20%;
+        left: 90%;
         height: 275px;
         background-color: var(--background-sidebar);
         padding: 1em;
@@ -25,5 +27,11 @@
     button {
         margin-left: 5px;
         margin-right: 5px;
+    }
+
+    @media screen and (max-width: 600px) {
+        aside {
+            display: none;
+        }
     }
 </style>

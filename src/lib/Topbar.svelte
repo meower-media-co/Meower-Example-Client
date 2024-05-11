@@ -9,11 +9,13 @@
 <style>
     .topbar {
         display: flex;
+        flex: top;
         gap: 3em;
         width: 100%;
         margin-bottom: 10px;
         position: relative;
-        top: 5px
+
+        margin-top: 5px
     }
     img {
         margin: auto;
